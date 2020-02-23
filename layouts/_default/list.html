@@ -3,7 +3,7 @@
 {{ $Pages := .Pages }}
 
 {{ if .IsHome }}
-  {{ $Pages = where site.RegularPages "Type" "in" .Site.Params.mainSections }}
+{{ $Pages = where site.RegularPages "Type" "in" .Site.Params.mainSections }}
 {{ end }}
 
 {{ if .Site.Params.show_excerpts }}
@@ -16,7 +16,7 @@
   </header>
   {{ .Summary }}
   {{- if .Truncated }}
-    <div class="more"><a href="{{ .RelPermalink }}">read more</a></div>
+  <div class="more"><a href="{{ .RelPermalink }}">read more</a></div>
   {{- end }}
 </article>
 {{- end }}
@@ -29,15 +29,17 @@
     {{- range $Pages }}
     <li>
       {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
-      {{ range .Params.categories }}
-      <a href="/categories/{{ . }}/">@{{ . }}</a>
-      {{ end }}
 
-      <a href="{{ .Permalink }}">
 
+      <span class="article">
+        <a href="{{ .Permalink }}">
         {{ .Title }}
-      </a>
-      {{ with .Params.tags }}{{ range . }} <a href="/tags/{{ . }}/">#{{ . }}</a>{{ end }}{{ end }}
+        </a>
+      </span>
+      {{ range .Params.categories }}
+      <span class="category"><a href="/categories/{{ . }}/">@{{ . }}</a></span>
+      {{ end }}
+      {{ with .Params.tags }}{{ range . }} <span class="tag"><a href="/tags/{{ . }}/">#{{ . }}</a></span>{{ end }}{{ end }}
     </li>
     {{- end }}
   </ul>
